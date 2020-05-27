@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Button } from 'react-native';
-import { Header, Icon } from 'react-native-elements';
-//Importing external library
-import * as Speech from 'expo-speech';
-
+import { Header } from 'react-native-elements';
 import dictionary from '../database';
 
 export default class HomeScreen extends Component{
@@ -19,13 +16,6 @@ export default class HomeScreen extends Component{
     };
   }
 
-  onSpeak = ()=>{
-    Speech.speak(this.state.word,{
-      language : 'en',
-      pitch : 1,
-      rate : 1
-    })
-  }
 
   getWord=(text)=>{
     var text = text.toLowerCase()
@@ -40,7 +30,7 @@ export default class HomeScreen extends Component{
       })
     }
     catch(err){
-      alert("Sorry This word is not available for now")
+      alert("Sorry This word is not available :(")
       this.setState({
         'text':'',
         'isSearchPressed':false
@@ -52,7 +42,7 @@ export default class HomeScreen extends Component{
     return(
       <View style={{flex:1}}>
         <Header
-          backgroundColor={'purple'}
+          backgroundColor={'powderblue'}
           centerComponent={{
             text: 'Pocket Dictionary',
             style: { color: '#fff', fontSize: 20 },
@@ -65,7 +55,7 @@ export default class HomeScreen extends Component{
               this.setState({
                 text: text,
                 isSearchPressed: false,
-                word  : "Loading...",
+                word  : "Please wait for a moment... :D",
                 lexicalCategory :'',
                 examples : [],
                 defination : ""
@@ -122,17 +112,6 @@ export default class HomeScreen extends Component{
                   <View
                     style={{justifyContent:'center',alignItems:'center', marginTop:10, flexDirection:'row'}}
                     >
-                    <Icon
-                      name='sound'
-                      type='antdesign'
-                      color='#517fa4'
-                    />
-                    <TouchableOpacity
-                      onPress={this.onSpeak}
-                      style={styles.speechButton}
-                    >
-                      <Text>{this.state.text}</Text>
-                    </TouchableOpacity>
                   </View>
                 </View>
               )
@@ -186,14 +165,4 @@ const styles = StyleSheet.create({
     fontSize:20,
     fontWeight:'bold'
   },
-  speechButton:{
-    width:200,
-    height:40,
-    justifyContent:'center',
-    alignItems:'center',
-    borderWidth:2,
-    backgroundColor:'orange',
-    borderRadius:10,
-    marginLeft:5
-  }
 });

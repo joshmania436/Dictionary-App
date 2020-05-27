@@ -48,7 +48,12 @@ const dictionary = {
     "word" : "ordinary",
     "lexicalCategory":"Adjective",
     "definition" : "with no special or distinctive features; normal"
-  }
+  },
+  "he" :{
+    "word": "he",
+    "lexicalCategory":"Pronoun",
+    "definition" : "used to refer to a man, boy, or male animal previously mentioned or easily identified"
+  },
 }
 
 export default dictionary
