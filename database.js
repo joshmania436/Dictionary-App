@@ -54,6 +54,21 @@ const dictionary = {
     "lexicalCategory":"Pronoun",
     "definition" : "used to refer to a man, boy, or male animal previously mentioned or easily identified"
   },
+  "gregarious":{
+    "word": "gregarious",
+    "lexicalCategory" : "Adjective",
+    "definition" : "(of a person) fond of company; sociable."
+  },
+  "floccinaucinihilipilification" :{
+    "word" : "floccinaucinihilipilification",
+    "lexicalCategory" : "Rare Noun",
+    "definition": "the action or habit of estimating something as worthless."
+  },
+  "sacerdotal":{
+    "word" : "sacerdotal",
+    "lexicalCategory" : "Adjective",
+    "definition" : "relating to priests or the priesthood; priestly"
+  }
 }
 
 export default dictionary

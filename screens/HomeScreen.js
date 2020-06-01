@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Button } from 'react-native';
-import { Header } from 'react-native-elements';
+import { Header, Icon } from 'react-native-elements';
+//Importing external library
+import * as Speech from 'expo-speech';
+
 import dictionary from '../database';
 
 export default class HomeScreen extends Component{
@@ -10,12 +13,19 @@ export default class HomeScreen extends Component{
       text: '',
       isSearchPressed: false,
       isLoading: false,
-      word  : "Loading...",
+      word  : "Please wait while we fetch the word",
       lexicalCategory :'',
       definition : ""
     };
   }
 
+  onSpeak = ()=>{
+    Speech.speak(this.state.word,{
+      language : 'en',
+      pitch : 1,
+      rate : 1
+    })
+  }
 
   getWord=(text)=>{
     var text = text.toLowerCase()
@@ -30,7 +40,7 @@ export default class HomeScreen extends Component{
       })
     }
     catch(err){
-      alert("Sorry This word is not available :(")
+      alert("Sorry, this word is not avaliable, please check your spelling or try again!")
       this.setState({
         'text':'',
         'isSearchPressed':false
@@ -40,9 +50,9 @@ export default class HomeScreen extends Component{
 
   render(){
     return(
-      <View style={{flex:1}}>
+      <View style={{flex:1, backgroundColor:'powderblue'}}>
         <Header
-          backgroundColor={'powderblue'}
+          backgroundColor={'crimson'}
           centerComponent={{
             text: 'Pocket Dictionary',
             style: { color: '#fff', fontSize: 20 },
@@ -55,7 +65,7 @@ export default class HomeScreen extends Component{
               this.setState({
                 text: text,
                 isSearchPressed: false,
-                word  : "Please wait for a moment... :D",
+                word  : "Please wait while we fetch the word",
                 lexicalCategory :'',
                 examples : [],
                 defination : ""
@@ -76,13 +86,13 @@ export default class HomeScreen extends Component{
         <View style={styles.outputContainer}>
           <Text style={{fontSize:20}}>
             {
-              this.state.isSearchPressed && this.state.word === "Loading..."
+              this.state.isSearchPressed && this.state.word === "Please wait while we fetch the word"
               ? this.state.word
               : ""
             }
           </Text>
             {
-              this.state.word !== "Loading..." ?
+              this.state.word !== "Please wait while we fetch the word" ?
               (
                 <View style={{justifyContent:'center', marginLeft:10 }}>
                   <View style={styles.detailsContainer}>
@@ -112,6 +122,17 @@ export default class HomeScreen extends Component{
                   <View
                     style={{justifyContent:'center',alignItems:'center', marginTop:10, flexDirection:'row'}}
                     >
+                    <Icon
+                      name='sound'
+                      type='antdesign'
+                      color='black'
+                    />
+                    <TouchableOpacity
+                      onPress={this.onSpeak}
+                      style={styles.speechButton}
+                    >
+                      <Text>{this.state.text}</Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
               )
@@ -145,8 +166,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     margin: 10,
+    backgroundColor:'lightgreen',
     borderWidth: 2,
     borderRadius: 10,
+
   },
   searchText:{
     fontSize: 20,
@@ -165,4 +188,14 @@ const styles = StyleSheet.create({
     fontSize:20,
     fontWeight:'bold'
   },
+  speechButton:{
+    width:200,
+    height:40,
+    justifyContent:'center',
+    alignItems:'center',
+    borderWidth:2,
+    backgroundColor:'orange',
+    borderRadius:10,
+    marginLeft:5
+  }
 });
